@@ -46,7 +46,7 @@ if(!empty($_POST["acc"])){
                     	                    </marquee>
                     <div style="height:32px; display:block;"></div>
                                         <!--正中央-->
-                                <form method="post" action="?do=check" target="back">
+                                <form method="post">
                         	    	<p class="t botli">管理員登入區</p>
                         			<p class="cent">帳號 ： <input name="acc" autofocus="" type="text"></p>
                         	        <p class="cent">密碼 ： <input name="ps" type="password"></p>
