@@ -1,4 +1,12 @@
-﻿<div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
+﻿<?php
+	if(!empty($_POST["myalt"])){
+		$tt = date("YmdHis");
+		$sql="insert into a_1_3_title_pic value(NILL,'".$tt.".jpg','".$_POST["myalt"]."','0')";
+		mysqli_query($link,$sql);
+		copy($_FILES["mypic"]["tmp_name"],"title_pictuere/".$tt.".jpg");
+	}	
+?>
+<div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
 	<p class="t cent botli">網站標題管理</p>
 	<form method="post" target="back" action="?do=tii">
 		<table width="100%">
