@@ -8,9 +8,11 @@
 	}	
 	if(isset($_POST["my_alt"][0])){
 		for($i=0;$i<count($_POST["my_no"]);$i++){
-			$sql = "update a_1_3_title_pic set a_1_3_title_alt = '".$_POST["my_alt"][$i]."', a_1_3_title_look = 0 where a_1_3_t_p_seq = '".$_POST["my_no"][$i]."'";
+			$sql = "update a_1_3_title_pic set a_1_3_t_p_alt = '".$_POST["my_alt"][$i]."', a_1_3_t_p_look = 0 where a_1_3_t_p_seq = '".$_POST["my_no"][$i]."'";
 			mysqli_query($link,$sql);	
-		}	
+		}
+		$sql = "update a_1_3_title_pic set a_1_3_t_p_look = 1 where a_1_3_t_p_seq = '".$_POST["myupdate"]."'";
+		mysqli_query($link,$sql);
 	}
 		$sql = "select * from a_1_3_title_pic";
 		$or = mysqli_query($link,$sql);
