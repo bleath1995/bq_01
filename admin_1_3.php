@@ -1,19 +1,43 @@
 ﻿<?php
+//====================================上傳圖片=====================================================
 	if(!empty($_POST["myalt"])){
 		$tt = date("YmdHis");
 		$sql="insert into a_1_3_title_pic value(Null,'".$tt.".jpg','".$_POST["myalt"]."','0')";
 		mysqli_query($link,$sql);
 		copy($_FILES["mypic"]["tmp_name"],"title_pictuere/".$tt.".jpg");
 		?><script>document.location.href="admin.php";</script><?php
-	}	
+	}
+//====================================上傳圖片=====================================================
+//====================================修改內容=====================================================	
 	if(isset($_POST["my_alt"][0])){
 		for($i=0;$i<count($_POST["my_no"]);$i++){
 			$sql = "update a_1_3_title_pic set a_1_3_t_p_alt = '".$_POST["my_alt"][$i]."', a_1_3_t_p_look = 0 where a_1_3_t_p_seq = '".$_POST["my_no"][$i]."'";
-			mysqli_query($link,$sql);	
+			mysqli_query($link,$sql);
+//**************************刪除**************************			
+			if(!empty($_POST["mydelete"][$i])){
+				$sql = "select * from a_1_3_title_pic where a_1_3_t_p_seq = '".$_POST["mydelete"][$i]."'";
+				$or = mysqli_query($link,$sql);
+				$oo = mysqli_fetch_assoc($or);
+				unlink("title_pictuere/".$oo["a_1_3_t_p_title"]);
+				$sql = "delete from a_1_3_title_pic where a_1_3_t_p_seq = '".$_POST["mydelete"][$i]."'";
+				mysqli_query($link,$sql);
 		}
+//**************************刪除**************************
+	}    
+	
+	if(!empty($_POST["myupdate"])){
 		$sql = "update a_1_3_title_pic set a_1_3_t_p_look = 1 where a_1_3_t_p_seq = '".$_POST["myupdate"]."'";
 		mysqli_query($link,$sql);
+		}
+		?><script>document.location.href="admin.php";</script><?php
 	}
+//====================================修改內容=====================================================
+//====================================修改圖片=====================================================
+	if(!empty($_POST["update_pic_no"])){
+		copy($_FILES["update_pic"]["tmp_name"],"title_pictuere/".$_POST["update_pic_name"]);	
+		?><script>document.location.href="admin.php";</script><?php	
+	}
+//====================================修改圖片=====================================================	
 		$sql = "select * from a_1_3_title_pic";
 		$or = mysqli_query($link,$sql);
 		$oo = mysqli_fetch_assoc($or);
@@ -42,7 +66,7 @@
 					<td width="7%">
 						<input type="checkbox" name="mydelete[]" value="<?=$oo["a_1_3_t_p_seq"]?>">
 					</td>
-					<td></td>
+					<td><input type="button" onclick="op('#cover','#cvr','admin_1_3_update_pic.php?pic=<?=$oo["a_1_3_t_p_seq"]?>')" value="更新圖片"></td>
 				</tr>
 <?php	}while($oo = mysqli_fetch_assoc($or));?>		
 	</table>
